@@ -3,4 +3,6 @@ class User < ActiveRecord::Base
 
 	has_many :wishes
 	has_many :products, :through => :wishes
+
+	validates_uniqueness_of :email
 end
