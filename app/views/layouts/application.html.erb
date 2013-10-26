@@ -7,8 +7,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<%= nav_bar :fixed => :top, :brand => "Wishlist" do %>
+	   	<% menu_group do %>
+   			<%= menu_item "Home", root_path %>
+   			<%= menu_item "Products", products_path %>
+   			<%= menu_item "Users", users_path %>
+	    <% end %>
+	<% end %>
 
-<%= yield %>
+	<div class ="container">
+
+		<div class="span9"><%= yield %></div>
+	</div>
 
 </body>
 </html>
