@@ -1,10 +1,17 @@
 class UsersController < ApplicationController
+
+	before_action :authorize, only: [:show, :edit, :update, :destroy]
+	before_action :adminize, only: [:index]
+	#before_action(:only => [:show]) {authorize(params[:id])}
+
 	def index
 		@users = User.all
 	end
 
+	# Render show template. If ID is given checks if currently 
+	# logged in user is an admin. If ID is not given shows currently logged in users profle.
 	def show
-		@user = User.find(params[:id])
+		find_user_by_id params[:id]
 	end
 
 	def new
@@ -15,18 +22,20 @@ class UsersController < ApplicationController
 		@user = User.create(params[:user].permit :username, :email, :password, :password_confirmation)
 		@user.admin = false
 		if @user.save
-			redirect_to users_path
+			session[:user_id] = @user.id
+			redirect_to root_path
 		else
 			render 'new'
 		end
 	end
 
 	def edit
-		@user = User.find(params[:id])
+		find_user_by_id params[:id]
 	end
 
 	def update
-		@user = User.find(params[:id])
+		find_user_by_id params[:id]
+
 		if @user.update_attributes(params[:user].permit :username, :email, :password, :password_confirmation)
 			redirect_to users_path
 		else
@@ -35,7 +44,7 @@ class UsersController < ApplicationController
 	end
 
 	def destroy
-		@user = User.find(params[:id])
+		find_user_by_id params[:id]
 		@user.destroy
 		redirect_to users_path
 	end

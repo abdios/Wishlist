@@ -1,4 +1,7 @@
 class ProductsController < ApplicationController
+
+	before_action :adminize, only: [:new, :create, :edit, :update, :destroy]
+	
 	def index
 		@products = Product.all
 	end
@@ -12,7 +15,7 @@ class ProductsController < ApplicationController
 	end
 
 	def create
-		@product = Product.create(params[:product].permit(:name, :description, :price))
+		@product = Product.create(params[:product].permit(:name, :description, :price_in_euros))
 		if @product.save
 			redirect_to root_url
 		else
@@ -26,7 +29,7 @@ class ProductsController < ApplicationController
 
 	def update
 		@product = Product.find(params[:id])
-		if @product.update_attributes(params[:product].permit :name, :description, :price)
+		if @product.update_attributes(params[:product].permit :name, :description, :price_in_euros)
 			redirect_to root_url
 		else
 			render 'edit'

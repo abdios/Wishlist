@@ -8,8 +8,8 @@
   <dd><%= @product.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @product.description %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:price) %>:</strong></dt>
-  <dd><%= @product.price %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:price_in_euros) %>:</strong></dt>
+  <dd><%= number_to_currency @product.price_in_euros, unit: '€'%></dd>
 </dl>
 
 <div class="form-actions">
