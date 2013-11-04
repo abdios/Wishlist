@@ -3,11 +3,8 @@ Wishlist::Application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'signup', to: 'users#new', as: 'signup'
 
-  resources :users
-
-  resources :products
-
-  resources :sessions
+  resources :users, :products, :sessions
+  resources :wishes, :only => [:destroy, :create, :index]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

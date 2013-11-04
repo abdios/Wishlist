@@ -11,7 +11,7 @@
 	   	<% menu_group do %>   
    			<%= menu_item "Home", root_path %>
 			<% if current_user %>
-   				<%= menu_item "Wishlist", root_path %>
+   				<%= menu_item "Wishlist", wishes_path %>
 				<% if current_user.admin %>
 	   				<%= menu_item "Users", users_path %>
 					<%= menu_item "Products", products_path %>	

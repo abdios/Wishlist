@@ -1,0 +1,36 @@
+<%- model_class = Wish -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<% if @wishes.empty?%>
+  <p>You dont have any wishes yet. <%= link_to 'Click here', products_path %> to view products</p>
+<% else %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= 'Name' %></th>
+        <th><%= 'description' %></th>
+        <th><%= 'Price' %></th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @wishes.each do |wish| %>
+        <tr>
+          <%product = Product.find_by_id(wish.product_id)%>
+
+          <% if !product.nil? %>
+            <td><%= product.name %></td>
+            <td><%= product.description %></td>
+            <td><%= number_to_currency product.price_in_euros, unit: '€' %></td>
+            <td>
+              <%= link_to 'Remove', wish_path(wish),:method => :delete,
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm",
+                :default => 'Are you sure?')) },:class => 'btn btn-mini btn-danger' %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

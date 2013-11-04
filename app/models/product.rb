@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-	has_many :wishes
+	has_many :wishes, :dependent => :destroy
 	has_many :users, :through => :wishes
 
   def price_in_euros
